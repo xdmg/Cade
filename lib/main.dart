@@ -1,3 +1,5 @@
+import 'package:daily_coffee/Widgets/button.dart';
+import 'package:daily_coffee/Widgets/input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,19 +18,20 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xffc97846),
         textTheme: TextTheme(
-          bodyText2:TextStyle(
+          bodyText2: TextStyle(
             color: const Color(0xccffffff),
           ),
         ),
         scaffoldBackgroundColor: const Color(0xff0c1015),
       ),
-      home: const Login(title: 'This is being changed'),
+      home: const Login(title: 'Login screen'),
     );
   }
 }
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.title});
+
   final String title;
 
   @override
@@ -37,12 +40,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,49 +56,27 @@ class _LoginState extends State<Login> {
                 fontFamily: 'Karla',
               ),
             ),
+            SizedBox(height: 10),
+            CustomTextField(
+                radius: 7, text: "Email", icon: Icons.email_outlined),
+            SizedBox(height: 10),
+            CustomTextField(
+                radius: 7, text: "Password", icon: Icons.key_outlined),
             SizedBox(
-              height: 50.0,
-              child: Row(
+                height: 50.0,
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Don't have an account?"
-                    ),
-                    SizedBox(width: 15),
-                    Container(
-                      child: InkWell(
-                        onTap: () {},
-                        child: Ink(
-                          width: 100,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            gradient: LinearGradient(
-                              colors: [Color(0xff1f252e), Color(0xff0c1015)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'SIGN UP',
-                                style: TextStyle(
-                                  color: const Color(0xff51545C),
-                                  fontFamily: 'DMSans',
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      "Don't have an account?",
+                      style: TextStyle(
+                        fontFamily: 'Karla',
                       ),
                     ),
+                    SizedBox(width: 15),
+                    CustomButton(text: "SIGN UP", radius: 5.0),
                   ],
-                )
-             ),
+                )),
           ],
         ),
       ),
