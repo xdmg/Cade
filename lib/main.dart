@@ -24,22 +24,30 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xff0c1015),
       ),
-      home: const Login(title: 'Login screen'),
+      home: Login(),
     );
   }
 }
 
 class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
-
-  final String title;
+  Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
-  int _counter = 0;
+  late TextEditingController emailController;
+  late CustomTextField passwordInput;
+
+  refresh() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    emailController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +64,23 @@ class _LoginState extends State<Login> {
                 fontFamily: 'Karla',
               ),
             ),
+            SizedBox(height: 15),
+            CustomTextField(
+              radius: 7,
+              text: "Email",
+              icon: Icons.email_outlined,
+              controller: emailController,
+              notifyParent: refresh,
+            ),
             SizedBox(height: 10),
             CustomTextField(
-                radius: 7, text: "Email", icon: Icons.email_outlined),
-            SizedBox(height: 10),
-            CustomTextField(
-                radius: 7, text: "Password", icon: Icons.key_outlined),
+              radius: 7,
+              text: "Password",
+              icon: Icons.key_outlined,
+              parent: true,
+              controller: emailController,
+              notifyParent: refresh,
+            ),
             SizedBox(
                 height: 50.0,
                 child: Row(

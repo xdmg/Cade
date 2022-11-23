@@ -5,9 +5,18 @@ class CustomTextField extends StatefulWidget {
   final double radius;
   final String text;
   final IconData icon;
+  final TextEditingController controller;
+  final Function() notifyParent;
+  bool parent;
 
-  const CustomTextField(
-      {Key? key, required this.radius, required this.text, required this.icon})
+  CustomTextField(
+      {Key? key,
+      required this.radius,
+      required this.text,
+      required this.icon,
+      required this.controller,
+      this.parent = false,
+      required this.notifyParent})
       : super(key: key);
 
   @override
@@ -16,10 +25,7 @@ class CustomTextField extends StatefulWidget {
 
 class _CustomTextFieldState extends State<CustomTextField> {
   final TextEditingController _textController = new TextEditingController();
-  bool showSendIcon = false;
 
-  TextEditingController getController() => _textController; //Function to get the text controller of this field;
-  void setSendIcon () {showSendIcon = true;} //Function to show the send icon if set so;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -57,17 +63,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
           child: TextFormField(
-            controller: _textController,
-            onChanged: (text) {setState(() {});},
-            expands: true,
+            controller: widget.parent ? _textController : widget.controller,
+            onChanged: (text) {
+              setState(() {
+                widget.notifyParent();
+              });
+            },
+            // expands: true,
             minLines: null,
-            maxLines: null,
+            maxLines: 1,
             cursorColor: Colors.grey,
             style: TextStyle(
               color: const Color(0x99ffffff),
               fontFamily: 'Karla',
               fontSize: 15,
               fontWeight: FontWeight.w500,
+              overflow: TextOverflow.fade,
             ),
             textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
@@ -76,12 +87,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     Shadow(color: Color(0x59ffffff), blurRadius: 45.0)
                   ],
                   color: Color(0xff51545C)),
-              suffixIcon: showSendIcon ? IconButton(
-                  icon: Icon(Icons.send, color: Color(0xffc97846)),
-                  onPressed: () {
-                    debugPrint('222');
-                  }):null,
-              contentPadding: EdgeInsets.symmetric(horizontal: 25),
+              suffixIcon: widget.parent
+                  ? widget.controller.text.length > 0 &&
+                          _textController.text.length > 0
+                      ? MaterialButton(
+                          child: Icon(
+                            Icons.send,
+                            color: Color(0xffc97846),
+                            shadows: <Shadow>[
+                              Shadow(color: Color(0xffc97846), blurRadius: 55.0)
+                            ],
+                          ),
+                          minWidth: 0,
+                          padding: EdgeInsets.zero,
+                          shape: const CircleBorder(),
+                          onPressed: () {})
+                      : null
+                  : null,
+              contentPadding: EdgeInsets.symmetric(horizontal: 10),
               hintText: widget.text,
               hintStyle: TextStyle(
                 color: const Color(0xff51545C),

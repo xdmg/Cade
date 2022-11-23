@@ -54,6 +54,9 @@ class CustomButton extends StatelessWidget {
                 fontFamily: 'DMSans',
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
+                shadows: <Shadow>[
+                  Shadow(color: Color(0x66ffffff), blurRadius: 55.0)
+                ],
               ),
             ),
             style: ButtonStyle(
