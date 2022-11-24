@@ -20,11 +20,11 @@ class CustomTextField extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<CustomTextField> createState() => CustomTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _textController = new TextEditingController();
+class CustomTextFieldState extends State<CustomTextField> {
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +65,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           child: TextFormField(
             controller: widget.parent ? _textController : widget.controller,
             onChanged: (text) {
-              setState(() {
                 widget.notifyParent();
-              });
             },
             // expands: true,
             minLines: null,
