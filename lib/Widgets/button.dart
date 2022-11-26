@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget {
   final String text;
   final double radius;
+  final Function() resFunction;
 
-  const CustomButton({Key? key, required this.text, required this.radius})
+  const CustomButton(
+      {Key? key,
+      required this.text,
+      required this.radius,
+      required this.resFunction})
       : super(key: key);
 
   @override
@@ -46,7 +51,9 @@ class CustomButton extends StatelessWidget {
           child: TextButton(
             // mainAxisAlignment: MainAxisAlignment.center,
             // children: [
-            onPressed: () {},
+            onPressed: () {
+              resFunction();
+            },
             child: Text(
               text,
               style: TextStyle(

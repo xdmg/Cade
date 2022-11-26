@@ -3,8 +3,15 @@ import 'package:daily_coffee/Widgets/input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'Services/auth.dart';
+
 class Login extends StatefulWidget {
-  Login({super.key});
+  final Function() switcher;
+
+  Login({
+    super.key,
+    required this.switcher,
+  });
 
   @override
   State<Login> createState() => _LoginState();
@@ -13,6 +20,8 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final GlobalKey<CustomTextFieldState> _key = GlobalKey();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final AuthService _auth = AuthService();
   late CustomTextField passwordInput;
 
   notifyParent() {
@@ -21,7 +30,7 @@ class _LoginState extends State<Login> {
 
   // @override
   // void initState() {
-    // emailController = TextEditingController();
+  // emailController = TextEditingController();
   // }
 
   @override
@@ -40,22 +49,37 @@ class _LoginState extends State<Login> {
               ),
             ),
             SizedBox(height: 15),
-            CustomTextField(
-              radius: 7,
-              text: "Email",
-              icon: Icons.email_outlined,
-              controller: emailController,
-              notifyParent: notifyParent,
-            ),
-            SizedBox(height: 10),
-            CustomTextField(
-              key: _key,
-              radius: 7,
-              text: "Password",
-              icon: Icons.key_outlined,
-              parent: true,
-              controller: emailController,
-              notifyParent: notifyParent,
+            Form(
+              child: Column(
+                children: [
+                  CustomTextField(
+                    radius: 7,
+                    text: "Email",
+                    icon: Icons.email_outlined,
+                    childController: emailController,
+                    parentController: passwordController,
+                    notifyParent: notifyParent,
+                    onClick: () {},
+                  ),
+                  SizedBox(height: 10),
+                  CustomTextField(
+                    key: _key,
+                    radius: 7,
+                    text: "Password",
+                    icon: Icons.key_outlined,
+                    parent: true,
+                    childController: emailController,
+                    parentController: passwordController,
+                    notifyParent: notifyParent,
+                    hideText: true,
+                    onClick: () async {
+                      dynamic result = await _auth.signIn(
+                          emailController.text, passwordController.text);
+                      if (result == null) print("Try again please");
+                    },
+                  ),
+                ],
+              ),
             ),
             SizedBox(
                 height: 50.0,
@@ -69,7 +93,12 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     SizedBox(width: 15),
-                    CustomButton(text: "SIGN UP", radius: 5.0),
+                    CustomButton(
+                        text: "SIGN UP",
+                        radius: 5.0,
+                        resFunction: () {
+                          widget.switcher();
+                        }),
                   ],
                 )),
           ],

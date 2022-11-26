@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   final double radius;
   final String text;
   final IconData icon;
-  final TextEditingController controller;
+  final TextEditingController childController;
+  final TextEditingController parentController;
   final Function() notifyParent;
+  final Function() onClick;
+  final hideText;
   bool parent;
 
   CustomTextField(
@@ -14,9 +18,12 @@ class CustomTextField extends StatefulWidget {
       required this.radius,
       required this.text,
       required this.icon,
-      required this.controller,
+      required this.childController,
       this.parent = false,
-      required this.notifyParent})
+      required this.notifyParent,
+      this.hideText = false,
+      required this.onClick,
+      required this.parentController})
       : super(key: key);
 
   @override
@@ -24,8 +31,6 @@ class CustomTextField extends StatefulWidget {
 }
 
 class CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _textController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -63,11 +68,16 @@ class CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
           child: TextFormField(
-            controller: widget.parent ? _textController : widget.controller,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'\s')),
+            ],
+            controller: widget.parent
+                ? widget.parentController
+                : widget.childController,
             onChanged: (text) {
-                widget.notifyParent();
+              widget.notifyParent();
             },
-            // expands: true,
+            obscureText: widget.hideText,
             minLines: null,
             maxLines: 1,
             cursorColor: Colors.grey,
@@ -86,8 +96,8 @@ class CustomTextFieldState extends State<CustomTextField> {
                   ],
                   color: Color(0xff51545C)),
               suffixIcon: widget.parent
-                  ? widget.controller.text.length > 0 &&
-                          _textController.text.length > 0
+                  ? widget.childController.text.length > 0 &&
+                          widget.parentController.text.length > 0
                       ? MaterialButton(
                           child: Icon(
                             Icons.send,
@@ -99,7 +109,9 @@ class CustomTextFieldState extends State<CustomTextField> {
                           minWidth: 0,
                           padding: EdgeInsets.zero,
                           shape: const CircleBorder(),
-                          onPressed: () {})
+                          onPressed: () {
+                            widget.onClick();
+                          })
                       : null
                   : null,
               contentPadding: EdgeInsets.symmetric(horizontal: 10),
