@@ -1,8 +1,9 @@
 import 'package:daily_coffee/Widgets/button.dart';
 import 'package:daily_coffee/Widgets/input.dart';
+import 'package:daily_coffee/Widgets/snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:loader_overlay/loader_overlay.dart';
 import 'Services/auth.dart';
 
 class Login extends StatefulWidget {
@@ -28,10 +29,19 @@ class _LoginState extends State<Login> {
     _key.currentState!.setState(() {});
   }
 
-  // @override
-  // void initState() {
-  // emailController = TextEditingController();
-  // }
+  void showError(BuildContext context, String Message) {
+    final snackBar = SnackBar(
+        padding: null,
+        backgroundColor: Color(0x00ffffff),
+        content: Container(
+            padding: null,
+            decoration: BoxDecoration(
+              color: Colors.red,
+            ),
+            child: Text(Message)));
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +83,11 @@ class _LoginState extends State<Login> {
                     notifyParent: notifyParent,
                     hideText: true,
                     onClick: () async {
+                      context.loaderOverlay.show();
                       dynamic result = await _auth.signIn(
                           emailController.text, passwordController.text);
-                      if (result == null) print("Try again please");
+                      context.loaderOverlay.hide();
+                      if (result.runtimeType == String) FlushBar(result,context).showFlushBar();
                     },
                   ),
                 ],

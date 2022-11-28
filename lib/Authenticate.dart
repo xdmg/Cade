@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'Login.dart';
 import 'Register.dart';
@@ -21,6 +22,7 @@ class _AuthenticateState extends State<Authenticate> {
 
   @override
   Widget build(BuildContext context) {
+    context.loaderOverlay.hide();
     return flag ? Login(switcher: switcher) : Register(switcher: switcher);
   }
 }

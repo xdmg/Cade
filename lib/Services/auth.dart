@@ -12,8 +12,8 @@ class AuthService {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return result.user;
-    } catch (e) {
-      print(e.toString());
+    } on FirebaseAuthException catch (e) {
+      return getMessageFromErrorCode(e.code);
     }
   }
 
@@ -23,8 +23,8 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       return result.user;
-    } catch (e) {
-      print(e.toString());
+    } on FirebaseAuthException catch (e) {
+      return getMessageFromErrorCode(e.code);
     }
   }
 
@@ -32,8 +32,48 @@ class AuthService {
   Future signOut() async {
     try {
       return await _auth.signOut();
-    } catch (e) {
-      print(e.toString());
+    } on FirebaseAuthException catch (e) {
+      return getMessageFromErrorCode(e.code);
+    }
+  }
+
+  //Convert errors into strings;
+  String getMessageFromErrorCode(dynamic e) {
+    switch (e) {
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+      case "account-exists-with-different-credential":
+      case "email-already-in-use":
+        return "Email already used. Go to login page.";
+
+      case "ERROR_WRONG_PASSWORD":
+      case "wrong-password":
+        return "Wrong email/password combination.";
+
+      case "ERROR_USER_NOT_FOUND":
+      case "user-not-found":
+        return "No user found with this email.";
+
+      case "ERROR_USER_DISABLED":
+      case "user-disabled":
+        return "User disabled.";
+
+      case "ERROR_TOO_MANY_REQUESTS":
+      case "operation-not-allowed":
+        return "Too many requests to log into this account.";
+
+      case "ERROR_OPERATION_NOT_ALLOWED":
+      case "operation-not-allowed":
+        return "Server error, please try again later.";
+
+      case "ERROR_INVALID_EMAIL":
+      case "invalid-email":
+        return "Provided Email is invalid";
+
+      case "weak-password":
+        return "Password must be at least 6 characters long";
+
+      default:
+        return "Login failed. Please try again.";
     }
   }
 }

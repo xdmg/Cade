@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:flutter/cupertino.dart';
 import 'Services/auth.dart';
 import 'Widgets/button.dart';
@@ -9,6 +10,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthService _auth = AuthService();
+    context.loaderOverlay.hide();
     return Scaffold(
       body: Center(
         child: CustomButton(

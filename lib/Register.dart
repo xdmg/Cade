@@ -2,7 +2,10 @@ import 'package:daily_coffee/Widgets/button.dart';
 import 'package:daily_coffee/Widgets/input.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:daily_coffee/Services/auth.dart';
+
+import 'Widgets/snackbar.dart';
 
 class Register extends StatefulWidget {
   final Function() switcher;
@@ -23,11 +26,6 @@ class _RegisterState extends State<Register> {
   notifyParent() {
     _key.currentState!.setState(() {});
   }
-
-  // @override
-  // void initState() {
-  // emailController = TextEditingController();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +67,11 @@ class _RegisterState extends State<Register> {
                   notifyParent: notifyParent,
                   hideText: true,
                   onClick: () async {
+                    context.loaderOverlay.show();
                     dynamic result = await _auth.register(
                         emailController.text, passwordController.text);
-                    if (result == null) print("Try again please");
+                    context.loaderOverlay.hide();
+                    if (result.runtimeType == String) FlushBar(result,context).showFlushBar();
                   },
                 ),
               ],

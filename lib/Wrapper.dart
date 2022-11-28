@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'Authenticate.dart';
 
 class Wrapper extends StatelessWidget {
@@ -13,7 +12,6 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentUser = Provider.of<User?>(context);
     print(currentUser);
-
     return currentUser == null ? Authenticate() : Home();
   }
 }
