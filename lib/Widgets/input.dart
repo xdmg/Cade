@@ -7,7 +7,7 @@ class CustomTextField extends StatefulWidget {
   final String text;
   final IconData icon;
   final TextEditingController childController;
-  final TextEditingController parentController;
+  final TextEditingController? parentController;
   final Function() notifyParent;
   final Function() onClick;
   final hideText;
@@ -23,7 +23,7 @@ class CustomTextField extends StatefulWidget {
       required this.notifyParent,
       this.hideText = false,
       required this.onClick,
-      required this.parentController})
+      this.parentController})
       : super(key: key);
 
   @override
@@ -96,8 +96,8 @@ class CustomTextFieldState extends State<CustomTextField> {
                   ],
                   color: Color(0xff51545C)),
               suffixIcon: widget.parent
-                  ? widget.childController.text.length > 0 &&
-                          widget.parentController.text.length > 0
+                 ? widget.childController.text.length > 0 &&
+                          widget.parentController!.text.length > 0
                       ? MaterialButton(
                           child: Icon(
                             Icons.send,

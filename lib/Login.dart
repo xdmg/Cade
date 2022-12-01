@@ -83,11 +83,13 @@ class _LoginState extends State<Login> {
                     notifyParent: notifyParent,
                     hideText: true,
                     onClick: () async {
+                      FocusManager.instance.primaryFocus?.unfocus();
                       context.loaderOverlay.show();
                       dynamic result = await _auth.signIn(
                           emailController.text, passwordController.text);
                       context.loaderOverlay.hide();
                       if (result.runtimeType == String) FlushBar(result,context).showFlushBar();
+                      passwordController.text = "";
                     },
                   ),
                 ],

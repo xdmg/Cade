@@ -67,11 +67,13 @@ class _RegisterState extends State<Register> {
                   notifyParent: notifyParent,
                   hideText: true,
                   onClick: () async {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     context.loaderOverlay.show();
                     dynamic result = await _auth.register(
                         emailController.text, passwordController.text);
                     context.loaderOverlay.hide();
                     if (result.runtimeType == String) FlushBar(result,context).showFlushBar();
+                    passwordController.text = "";
                   },
                 ),
               ],

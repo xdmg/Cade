@@ -43,7 +43,7 @@ class AuthService {
       case "ERROR_EMAIL_ALREADY_IN_USE":
       case "account-exists-with-different-credential":
       case "email-already-in-use":
-        return "Email already used. Go to login page.";
+        return "Account already exists, please login.";
 
       case "ERROR_WRONG_PASSWORD":
       case "wrong-password":
