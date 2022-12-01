@@ -1,15 +1,16 @@
+
 import 'package:daily_coffee/Widgets/input.dart';
+import 'package:daily_coffee/coffeeFetch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'Services/auth.dart';
 import 'Widgets/iconButton.dart';
 import 'Widgets/primaryButton.dart';
-import 'navbar.dart';
 
 class HomeBody extends StatefulWidget {
-  final int current;
-  final Function(int val) changeNav;
-  HomeBody({Key? key, required this.current, required this.changeNav}) : super(key: key);
+  HomeBody({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeBody> createState() => _HomeBodyState();
@@ -17,25 +18,16 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   final TextEditingController searchController = TextEditingController();
-  bool _isSelected = false;
   AuthService _auth = AuthService();
   int navigator = 0, value = 0;
   String type = "All";
-  bool _checkConfiguration() => true;
 
-  @override
-  void initState() {
-    super.initState();
-    if (_checkConfiguration())
-      Future.delayed(Duration.zero, () {
-         // NavBar(context,widget.current,widget.changeNav).showNavBar();
-      });
-  }
 
   Widget chip(String text, int val) => TextButton(
         onPressed: () {
           setState(() {
             value = val;
+            type = text;
           });
         },
         child: value != val
@@ -63,7 +55,7 @@ class _HomeBodyState extends State<HomeBody> {
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       shadows: <Shadow>[
-                        Shadow(color: Color(0x59C97845), blurRadius: 35.0)
+                        Shadow(color: Color(0x66C97845), blurRadius: 35.0)
                       ],
                       color: Color(0xFFC97845),
                     ),
@@ -71,7 +63,7 @@ class _HomeBodyState extends State<HomeBody> {
                   SizedBox(height: 7),
                   Icon(Icons.circle,
                       shadows: <Shadow>[
-                        Shadow(color: Color(0x59C97845), blurRadius: 35.0)
+                        Shadow(color: Color(0x66C97845), blurRadius: 35.0)
                       ],
                       color: Color(0xFFC97845),
                       size: 6),
@@ -85,30 +77,31 @@ class _HomeBodyState extends State<HomeBody> {
             ))),
       );
 
-  Widget iconChip(IconData icon, int nav) => TextButton(
-        onPressed: () {
-          setState(() {
-            navigator = nav;
-          });
-        },
-        child: navigator != nav
-            ? Icon(
-                icon,
-                color: Color(0xFF51545B),
-              )
-            : Icon(Icons.circle, color: Color(0x00C97845), size: 7),
-        style: ButtonStyle(
-            overlayColor: MaterialStateProperty.all(Color(0x0dfffffe)),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-            ))),
-      );
+  // Widget iconChip(IconData icon, int nav) => TextButton(
+  //       onPressed: () {
+  //         setState(() {
+  //           navigator = nav;
+  //         });
+  //       },
+  //       child: navigator != nav
+  //           ? Icon(
+  //               icon,
+  //               color: Color(0xFF51545B),
+  //             )
+  //           : Icon(Icons.circle, color: Color(0x00C97845), size: 7),
+  //       style: ButtonStyle(
+  //           overlayColor: MaterialStateProperty.all(Color(0x0dfffffe)),
+  //           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+  //               RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(14),
+  //           ))),
+  //     );
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 29.0, vertical: 50.0),
+      padding: const EdgeInsets.fromLTRB(29.0, 50.0, 29, 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -195,7 +188,9 @@ class _HomeBodyState extends State<HomeBody> {
                 ],
               ),
             ),
-          )
+          ),
+          SizedBox(height: 10),
+          Coffees(keyword: type,),
         ],
       ),
     );
