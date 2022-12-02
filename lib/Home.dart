@@ -18,8 +18,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int navigator = 0;
-
-
   int current = 0;
 
   @override
@@ -30,7 +28,7 @@ class _HomeState extends State<Home> {
         initialData: null,
         value: DatabaseService().coffees,
         child: Scaffold(
-          extendBody: true,
+          // extendBody: true,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: Container(
@@ -38,6 +36,10 @@ class _HomeState extends State<Home> {
             height: 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
+              boxShadow: [new BoxShadow(
+                color: Colors.black,
+                blurRadius: 35.0,
+              ),]
             ),
             child: Stack(
               children: [

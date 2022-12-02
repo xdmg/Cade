@@ -99,9 +99,11 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    print(width);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(29.0, 50.0, 29, 20),
+      padding: EdgeInsets.fromLTRB(29.0, height*0.06, 29, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -115,11 +117,11 @@ class _HomeBodyState extends State<HomeBody> {
                   PrimaryCustomButton(
                       text: "\$ 5.62", radius: 7, resFunction: () {}),
                   SizedBox(
-                    width: 20,
+                    width: width*0.05,
                   ),
                   Container(
-                    width: 40,
-                    height: 40,
+                    width: width*0.1,
+                    height: width*0.1,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(40),
                       gradient: LinearGradient(
@@ -148,7 +150,7 @@ class _HomeBodyState extends State<HomeBody> {
             ],
           ),
           SizedBox(
-            height: 20,
+            height: height*0.025,
           ),
           CustomTextField(
               radius: 10,
@@ -158,39 +160,43 @@ class _HomeBodyState extends State<HomeBody> {
               notifyParent: () {},
               onClick: () {},
               parentController: null),
-          SizedBox(height: 20),
+          SizedBox(height: height*0.025),
           Container(
-            height: 55,
-            child: Expanded(
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  chip("All", 0),
-                  SizedBox(
-                    width: 10,
+            height: height*0.070,
+            child: Row(
+              children: [
+                Expanded(
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      chip("All", 0),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      chip("Espresso", 1),
+                      SizedBox(
+                        width: 25,
+                      ),
+                      chip("Cappuccino", 2),
+                      SizedBox(
+                        width: 25,
+                      ),
+                      chip("Latte", 3),
+                      SizedBox(
+                        width: 25,
+                      ),
+                      chip("Flat Coffee", 4),
+                      SizedBox(
+                        width: 25,
+                      ),
+                    ],
                   ),
-                  chip("Espresso", 1),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  chip("Cappuccino", 2),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  chip("Latte", 3),
-                  SizedBox(
-                    width: 25,
-                  ),
-                  chip("Flat Coffee", 4),
-                  SizedBox(
-                    width: 25,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          SizedBox(height: 10),
-          Coffees(keyword: type,),
+          // SizedBox(height: 5),
+          SizedBox(height: MediaQuery.of(context).size.height*0.65,child: Coffees(keyword: type,)),
         ],
       ),
     );
