@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:daily_coffee/Services/auth.dart';
-
 import 'Widgets/snackbar.dart';
 
 class Register extends StatefulWidget {
@@ -53,6 +52,7 @@ class _RegisterState extends State<Register> {
                   childController: emailController,
                   parentController: passwordController,
                   notifyParent: notifyParent,
+                  sync: true,
                   onClick: () {},
                 ),
                 SizedBox(height: 10),
@@ -65,6 +65,7 @@ class _RegisterState extends State<Register> {
                   childController: emailController,
                   parentController: passwordController,
                   notifyParent: notifyParent,
+                  sync: true,
                   hideText: true,
                   onClick: () async {
                     FocusManager.instance.primaryFocus?.unfocus();
@@ -72,7 +73,8 @@ class _RegisterState extends State<Register> {
                     dynamic result = await _auth.register(
                         emailController.text, passwordController.text);
                     context.loaderOverlay.hide();
-                    if (result.runtimeType == String) FlushBar(result,context).showFlushBar();
+                    if (result.runtimeType == String)
+                      FlushBar(result, context).showFlushBar();
                     passwordController.text = "";
                   },
                 ),

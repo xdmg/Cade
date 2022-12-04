@@ -59,7 +59,9 @@ class MyApp extends StatelessWidget {
                         color: Color(0x990c1015),
                       ),
                       child: Center(
-                        child: Image(image: AssetImage('assets/Cade-loading-outlined-400.gif'),
+                        child: Image(
+                          image: AssetImage(
+                              'assets/Cade-loading-outlined-400.gif'),
                           width: 200,
                           height: 200,
                         ),

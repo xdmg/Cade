@@ -44,7 +44,7 @@ class PrimaryCustomButton extends StatelessWidget {
             color: Color(0xffC97846),
             boxShadow: [
               BoxShadow(
-                color: Color(0x66C97846),
+                color: Color(0x99C97846),
                 blurRadius: 30,
               )
             ],

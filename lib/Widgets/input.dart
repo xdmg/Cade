@@ -11,6 +11,7 @@ class CustomTextField extends StatefulWidget {
   final Function() notifyParent;
   final Function() onClick;
   final hideText;
+  final bool sync;
   bool parent;
 
   CustomTextField(
@@ -23,7 +24,8 @@ class CustomTextField extends StatefulWidget {
       required this.notifyParent,
       this.hideText = false,
       required this.onClick,
-      this.parentController})
+      this.parentController,
+      required this.sync})
       : super(key: key);
 
   @override
@@ -55,7 +57,9 @@ class CustomTextFieldState extends State<CustomTextField> {
           ),
         ),
         Container(
-          width: MediaQuery.of(context).size.width * 0.85,
+          width: widget.sync
+              ? MediaQuery.of(context).size.width * 0.85
+              : MediaQuery.of(context).size.width * 0.84,
           height: 50,
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -96,7 +100,7 @@ class CustomTextFieldState extends State<CustomTextField> {
                   ],
                   color: Color(0xff51545C)),
               suffixIcon: widget.parent
-                 ? widget.childController.text.length > 0 &&
+                  ? widget.childController.text.length > 0 &&
                           widget.parentController!.text.length > 0
                       ? MaterialButton(
                           child: Icon(

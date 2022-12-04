@@ -14,7 +14,7 @@ class CoffeeBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     double parentWidth = MediaQuery.of(context).size.width * 0.40;
     return Container(
-      height: 252,
+      height: 254,
       width: parentWidth,
       child: Stack(
           alignment: Alignment.center,
@@ -22,7 +22,7 @@ class CoffeeBlock extends StatelessWidget {
           children: <Widget>[
             Positioned(
               width: parentWidth,
-              height: 252,
+              height: 254,
               bottom: 1.1,
               right: 1.1,
               child: Container(
@@ -39,7 +39,7 @@ class CoffeeBlock extends StatelessWidget {
             ),
             Container(
               width: parentWidth,
-              height: 252,
+              height: 254,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -70,28 +70,38 @@ class CoffeeBlock extends StatelessWidget {
                     ),
                     SizedBox(
                       width: parentWidth * 0.80,
-                      child: Text(name,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'DMSans',
-                            fontSize: 17,
-                          )),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 5, 0),
+                        child: Text(name,
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontFamily: 'DMSans',
+                              fontSize: 17,
+                            )),
+                      ),
                     ),
                     SizedBox(
                       height: 2,
                     ),
                     SizedBox(
                       width: parentWidth * 0.80,
-                      child: Text("With ${desc}",
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontFamily: 'DMSans',
-                            fontSize: 12,
-                            color: Color(0xff51545C),
-                          )),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                        child: Text("With ${desc}",
+                            overflow: TextOverflow.fade,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontFamily: 'DMSans',
+                              fontSize: 12,
+                              color: Color(0xff51545C),
+                            )),
+                      ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
                     SizedBox(
                       width: parentWidth * 0.80,
@@ -106,6 +116,9 @@ class CoffeeBlock extends StatelessWidget {
                                 color: Color(0xffC97846),
                               )),
                           Text(" ${price}",
+                              overflow: TextOverflow.fade,
+                              maxLines: 1,
+                              softWrap: false,
                               style: TextStyle(
                                 fontFamily: 'Karla',
                                 fontSize: 17,

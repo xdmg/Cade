@@ -1,9 +1,7 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:daily_coffee/Widgets/coffeeBlock.dart';
 import 'package:provider/provider.dart';
-import 'Widgets/coffeeBlock.dart';
 import 'coffee.dart';
 
 class Coffees extends StatefulWidget {
@@ -17,22 +15,49 @@ class Coffees extends StatefulWidget {
 
 class _CoffeesState extends State<Coffees> {
   List<Widget> coffeeLister(List<Coffee> coffees) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     List<Widget> finalList = [];
     for (Coffee coffee in coffees) {
-      finalList.add(CoffeeBlock(
-        name: coffee.name,
-        desc: coffee.desc,
-        price: coffee.price,
-        img: coffee.img,
-      ));
+      if (widget.keyword == "All" ||
+          (coffee.name.toLowerCase().contains(widget.keyword.toLowerCase()) ||
+              coffee.desc.toLowerCase().contains(widget.keyword.toLowerCase())))
+        finalList.add(CoffeeBlock(
+          name: coffee.name,
+          desc: coffee.desc,
+          price: coffee.price,
+          img: coffee.img,
+        ));
     }
+    if (finalList.isEmpty)
+      finalList.add(SizedBox(
+          height: height * 0.57,
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.error_outline_rounded,
+                size: width * 0.2,
+                shadows: <Shadow>[
+                  Shadow(color: Color(0xccC97845), blurRadius: width*0.3)
+                ],
+                color: Color(0xFFC97845),
+              ),
+              SizedBox(height: height*0.02,),
+              Text(
+                  style: TextStyle(fontSize: 18, fontFamily: 'Karla'),
+                  "Sorry but nothing was found..."),
+            ],
+          ))));
     finalList.add(SizedBox(
-      height: 30,
-      width: MediaQuery.of(context).size.width * 0.40,
+      height: height * 0.08,
+      width: width * 0.40,
     ));
     finalList.add(SizedBox(
-      height: 30,
-      width: MediaQuery.of(context).size.width * 0.40,
+      height: height * 0.08,
+      width: width * 0.40,
     ));
     return finalList;
   }
@@ -44,50 +69,11 @@ class _CoffeesState extends State<Coffees> {
     //   print(doc.data());
     var size = MediaQuery.of(context).size;
 
-    return ShaderMask(
-      shaderCallback: (Rect rect) {
-        return LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.black,
-            Colors.transparent,
-            Colors.transparent,
-            Colors.black
-          ],
-          stops: [
-            0.0,
-            0.05,
-            0.95,
-            1.0
-          ], // 10% purple, 80% transparent, 10% purple
-        ).createShader(rect);
-      },
-      blendMode: BlendMode.dstOut,
-      child: ListView(
-          padding: EdgeInsets.fromLTRB(0, size.height*0.0225, 0, 0),
-          // shrinkWrap: true,
-          // physics: ScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          children: [
-            Wrap(
-              spacing: MediaQuery.of(context).size.width * 0.04,
-              runSpacing: MediaQuery.of(context).size.height * 0.038,
-              alignment: WrapAlignment.center,
-              children: coffees != null ? coffeeLister(coffees) : [],
-              // [
-              //   ,
-              //   CoffeeBlock(),
-              //   CoffeeBlock(),
-              //   CoffeeBlock(),
-              //   CoffeeBlock(),
-              //   CoffeeBlock(),
-              //   CoffeeBlock(),
-              //   SizedBox(height: 50,),
-              //   SizedBox(height: 50,),
-              // ]
-            ),
-          ]),
+    return Wrap(
+      spacing: MediaQuery.of(context).size.width * 0.04,
+      runSpacing: MediaQuery.of(context).size.height * 0.03,
+      alignment: WrapAlignment.center,
+      children: coffees != null ? coffeeLister(coffees) : [],
     );
   }
 }
