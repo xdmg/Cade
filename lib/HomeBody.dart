@@ -104,7 +104,6 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    print(width);
     return ScrollConfiguration(
       behavior: ScrollBehavior(),
       child: GlowingOverscrollIndicator(
@@ -113,6 +112,7 @@ class _HomeBodyState extends State<HomeBody> {
         child: Center(
           child: SizedBox(
             width: width*0.86,
+
             child: Padding(
               padding: EdgeInsets.fromLTRB(0,0,0,height*0.025),
               child: ListView(

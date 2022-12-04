@@ -2,6 +2,9 @@ import 'package:daily_coffee/Widgets/primaryButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../Home.dart';
+import '../details.dart';
+
 class CoffeeBlock extends StatelessWidget {
   final String name;
   final String img;
@@ -126,7 +129,9 @@ class CoffeeBlock extends StatelessWidget {
                               )),
                           Spacer(),
                           PrimaryCustomButton(
-                              text: "", radius: 7, resFunction: () {},height: 30,width: 30,icon: Icons.remove_red_eye,),
+                              text: "", radius: 7, resFunction: () {
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => Details(img: img,name: name,desc: desc,price: price)));
+                          },height: 30,width: 30,icon: Icons.remove_red_eye,),
                         ],
                       ),
                     ),

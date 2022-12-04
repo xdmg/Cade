@@ -15,7 +15,10 @@ void main() async {
     statusBarColor: Colors.transparent, // transparent status bar
   ));
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
